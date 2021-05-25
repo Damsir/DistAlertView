@@ -1,19 +1,19 @@
 /*
  作者：  吴定如 <75081647@qq.com>
  文件：  DistAlertView.m
- 版本：  1.0.4
+ 版本：  1.0.1
  地址：  https://github.com/Damsir/DistAlertView
  描述：  自定义弹框alert
- 更新：
+ 更新：  自适应
  */
 
 #import "DistAlertView.h"
 
-#define AlertWidth 275
+#define AlertWidth 280
 
-static const CGFloat kTitleFontSize = 17.0f;
-static const CGFloat kContentFontSize = 15.0f;
-static const CGFloat kButtonTitleFontSize = 16.0f;
+static const CGFloat kTitleFontSize = 18.0f;
+static const CGFloat kContentFontSize = 17.0f;
+static const CGFloat kButtonTitleFontSize = 17.0f;
 
 @interface DistAlertView()
 
@@ -44,7 +44,7 @@ static const CGFloat kButtonTitleFontSize = 16.0f;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         _alertBlock = alertBlock;
         // 默认高度
-        CGFloat alertHeight = 20;
+        CGFloat alertHeight = 25;
         
         _backgroundView = [[UIView alloc] initWithFrame:self.bounds];
         _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -60,15 +60,17 @@ static const CGFloat kButtonTitleFontSize = 16.0f;
         
         // 标题
         if (title.length > 0 && title != nil) {
-            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, alertHeight, AlertWidth, 20)];
+            CGSize size = [title boundingRectWithSize:CGSizeMake(AlertWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:kTitleFontSize weight:UIFontWeightMedium]} context:nil].size;
+            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, alertHeight, AlertWidth - 30, ceil(size.height))];
             titleLabel.text = title;
             titleLabel.textColor = [self colorFromHexRGB:@"333333"];
 //            titleLabel.textColor = [self colorFromHexRGB:@"878787"];
             titleLabel.font = [UIFont systemFontOfSize:kTitleFontSize weight:UIFontWeightMedium];
+            titleLabel.numberOfLines = 0;
             titleLabel.textAlignment = NSTextAlignmentCenter;
             [_alertView addSubview:titleLabel];
             
-            alertHeight = (message.length > 0 && message != nil) ? CGRectGetMaxY(titleLabel.frame) + 8 : CGRectGetMaxY(titleLabel.frame) + 20;
+            alertHeight = (message.length > 0 && message != nil) ? CGRectGetMaxY(titleLabel.frame) + 8 : CGRectGetMaxY(titleLabel.frame) + 25;
         }
         
         // 内容
@@ -77,13 +79,15 @@ static const CGFloat kButtonTitleFontSize = 16.0f;
             UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, alertHeight, AlertWidth - 50, ceil(size.height))];
             contentLabel.text = message;
 //            contentLabel.textColor = [self colorFromHexRGB:@"515151"];
-            contentLabel.textColor = [self colorFromHexRGB:@"404040"];
+//            contentLabel.textColor = [self colorFromHexRGB:@"404040"];
+//            contentLabel.textColor = [self colorFromHexRGB:@"333333"];
+            contentLabel.textColor = [self colorFromHexRGB:@"222222"];
             contentLabel.font = [UIFont systemFontOfSize:kContentFontSize];
             contentLabel.numberOfLines = 0;
             contentLabel.textAlignment = NSTextAlignmentCenter;
             [_alertView addSubview:contentLabel];
             
-            alertHeight = CGRectGetMaxY(contentLabel.frame) + 20;
+            alertHeight = CGRectGetMaxY(contentLabel.frame) + 25;
         }
         
         // 按钮上面的线条

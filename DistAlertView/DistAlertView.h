@@ -1,15 +1,13 @@
 /*
  作者：  吴定如 <75081647@qq.com>
  文件：  DistAlertView.h
- 版本：  1.0.4
+ 版本：  1.0.1
  地址：  https://github.com/Damsir/DistAlertView
  描述：  自定义弹框alert
- 更新：
+ 更新：  自适应
  */
 
 #import <UIKit/UIKit.h>
-
-NS_ASSUME_NONNULL_BEGIN
 
 @class DistAlertView;
 
@@ -92,5 +90,3 @@ typedef void (^DistAlertBlock)(DistAlertView *alert, NSInteger index);
 - (void)dismiss;
 
 @end
-
-NS_ASSUME_NONNULL_END
